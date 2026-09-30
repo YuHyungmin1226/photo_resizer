@@ -26,10 +26,21 @@ pip install -r requirements.txt
 python gui.py
 ```
 
-### 빌드 (실행 파일 생성)
+### 빌드 (설치 파일 · 포터블 생성)
+Windows에서 [Inno Setup 6](https://jrsoftware.org/isinfo.php)이 필요합니다(`winget install JRSoftware.InnoSetup`).
 ```bash
-pyinstaller PhotoResizerPro.spec
+pip install pyinstaller
+python build.py
 ```
+결과물은 `release\`에 만들어지고, 빌드 중간 파일(`dist-build\`)은 자동으로 정리됩니다.
+
+| 결과물 | 설명 |
+|---|---|
+| `release\PhotoResizerPro-Setup-<버전>.exe` | 설치 파일 (바탕 화면·시작 메뉴 바로 가기 생성, 관리자 권한 불필요) |
+| `release\PhotoResizerPro\PhotoResizerPro.exe` | 설치 없이 바로 실행 |
+| `release\PhotoResizerPro-<버전>-portable-win-x64.zip` | 위 실행 폴더를 묶은 포터블 zip (풀면 `PhotoResizerPro\` 폴더) |
+
+`<버전>`은 빌드한 날짜(`YYYY.MM.DD`)입니다. 빌드는 새 결과물(zip 내용·CRC 검사 포함)이 모두 확인된 뒤에만 `release\`를 바꾸고, `release\` 안의 파일이 사용 중이면 기존 결과물을 그대로 두고 실패(종료 코드 1)합니다. 설정은 `build.py`, 공통 빌드 로직은 `release_kit.py`에 있습니다.
 
 ## 기술 스택
 - **Python**: 핵심 로직

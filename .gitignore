@@ -6,3 +6,5 @@ dist/
 test_data/
 .vscode/
 .idea/
+release/
+dist-build/
